@@ -11,6 +11,9 @@ output_dirs = []
 
 cell_cycle_duration = 443.5    # 5*T
 
+R = 8.4127
+Diam = 2*R
+
 # fig = plt.figure(figsize=(4,3), dpi=200, tight_layout=True)
 # fig = plt.figure(figsize=(6,4))
 # fig.subplots(1)
@@ -30,7 +33,8 @@ cell_type = []
 
 if True:
         # folder_name = "out_num_cells_b" + str(beta) + "_g" + str(gamma)
-        data_dir = "output_checker_diag_6x6"
+        # data_dir = "output_checker_diag_6x6"
+        data_dir = "output_checker_vert_6x6"
         print('data_dir = ',data_dir)
         if (not os.path.exists(data_dir)):
             print("--- ERROR missing dir: ", data_dir)
@@ -93,12 +97,15 @@ with open(file_out, "w", newline="") as file:
         # print("t=",mcds.get_time())
         cell_ids = mcds.get_cell_df()["ID"]
         xvals = mcds.get_cell_df()["position_x"]
+        xvals /= Diam
         yvals = mcds.get_cell_df()["position_y"]
+        yvals /= Diam
         cell_types = mcds.get_cell_df()["cell_type"]
         for idx in range(len(cell_types)):
             print("cell_types= ",cell_types)
             # writer.writerow([t,rep,cell_ids[idx],xvals[idx],yvals[idx],cell_types[idx]])
-            writer.writerow([sim, t, int(cell_ids[idx]),int(cell_types[idx]),xvals[idx],yvals[idx]])
+            # writer.writerow([sim, t, int(cell_ids[idx]),int(cell_types[idx]),xvals[idx],yvals[idx]])
+            writer.writerow([sim, int(t), int(cell_ids[idx]),int(cell_types[idx]),xvals[idx],yvals[idx]])
     # for jdx in range(len(gvals)):
         # writer.writerow([gvals[jdx],tvals[jdx]])
 
